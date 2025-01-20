@@ -2,4 +2,4 @@ GET http://localhost:3000/rooms
 
 ###
 
-GET http://localhost:3000/rooms/4
+GET http://localhost:3000/rooms/678e1022c888ebd913c2da43
