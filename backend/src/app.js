@@ -1,37 +1,26 @@
 import express from "express";
-import mongoose from "mongoose";
-import Room from "./models/Rooms.js";
-import { asyncHandler } from "./utils/asyncHandler.js";
-import * as dotenv from "dotenv";
 import cors from "cors";
+import RoomRouter from "./routes/rooms.js";
+import ReservationRouter from "./routes/reservation.js";
 
-dotenv.config();
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.get(
-  "/rooms",
-  asyncHandler(async (req, res) => {
-    const room = await Room.find();
-    res.send(room);
-  })
-);
+// 라우터 연결
+app.use("/", RoomRouter); // '/Room' 라우트 연결
+app.use("/", ReservationRouter); // '/Reservation' 라우트 연결
 
-app.get(
-  "/rooms/:roomsId",
-  asyncHandler(async (req, res) => {
-    const id = req.params.roomsId;
-    const room = await Room.findById(id);
-    if (room) {
-      res.send(room);
-    } else {
-      res.status(404).send({ message: "Cannot find given id" });
-    }
-  })
-);
-app.listen(process.env.PORT || 3000, () => console.log("Server Started"));
-mongoose
-  .connect(process.env.DATABASE_URL)
-  .then(() => console.log("Connected to DB"));
+// 404 처리 (없는 경로 요청)
+app.use((req, res, next) => {
+  res.status(404).json({ message: "Route not found" });
+});
+
+// 에러 핸들러 (optional)
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: "Internal Server Error" });
+});
+
+export default app;
