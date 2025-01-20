@@ -1,20 +1,37 @@
 import express from "express";
-import rooms from "./mock.js";
+import mongoose from "mongoose";
+import Room from "./models/Rooms.js";
+import { asyncHandler } from "./utils/asyncHandler.js";
+import * as dotenv from "dotenv";
+import cors from "cors";
 
+dotenv.config();
 const app = express();
 
-app.get("/rooms", (req, res) => {
-  res.send(rooms);
-});
+app.use(cors());
+app.use(express.json());
 
-app.get("/rooms/:roomsId", (req, res) => {
-  const id = Number(req.params.roomsId);
-  const room = rooms.find((room) => room.id === id);
-  if (room) {
+app.get(
+  "/rooms",
+  asyncHandler(async (req, res) => {
+    const room = await Room.find();
     res.send(room);
-  } else {
-    res.status(404).send({ message: "Cannot find given id" });
-  }
-});
+  })
+);
 
-app.listen(3000, () => console.log("Server Started"));
+app.get(
+  "/rooms/:roomsId",
+  asyncHandler(async (req, res) => {
+    const id = req.params.roomsId;
+    const room = await Room.findById(id);
+    if (room) {
+      res.send(room);
+    } else {
+      res.status(404).send({ message: "Cannot find given id" });
+    }
+  })
+);
+app.listen(process.env.PORT || 3000, () => console.log("Server Started"));
+mongoose
+  .connect(process.env.DATABASE_URL)
+  .then(() => console.log("Connected to DB"));
