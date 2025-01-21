@@ -20,13 +20,13 @@ Content-Type: application/json
 {
     "title": "피드백",
     "description": "회의실에서 피드백하기",
-    "startTime": "2025-01-20T13:00:00+09:00",
-    "endTime": "2025-01-20T14:00:00+09:00",
-    "booker" : "장용한"
+    "startTime": "2025-01-22T14:30:00+09:00",
+    "endTime": "2025-01-22T15:00:00+09:00",
+    "booker" : "김유리"
 }
 
 ### '특정' 회의실에 대한 예약 삭제
-DELETE http://localhost:3000/reservation/678fb0e70b2bf1178197ea6e
+DELETE http://localhost:3000/reservation/678fbacbf53f084803222fa9
 
 
 
