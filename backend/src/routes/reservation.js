@@ -47,6 +47,22 @@ router.post(
   asyncHandler(async (req, res) => {
     const { roomId } = req.params;
     const { title, description, startTime, endTime, booker } = req.body;
+
+    const overlappingReservations = await Reservation.find({
+      roomId, // 같은 회의실에 대해
+      $or: [
+        { startTime: { $lt: endTime }, endTime: { $gt: startTime } }, // 시간 범위가 겹치는 경우
+      ],
+    });
+
+    if (overlappingReservations.length > 0) {
+      return res
+        .status(400)
+        .json({
+          message: "Reservation time overlaps with an existing reservation.",
+        });
+    }
+
     const reservation = await Reservation.create({
       title,
       description,
