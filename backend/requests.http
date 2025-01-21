@@ -27,3 +27,15 @@ Content-Type: application/json
 
 ### '특정' 회의실에 대한 예약 삭제
 DELETE http://localhost:3000/reservation/678e5edbd18f035904b70830
+
+
+
+
+
+
+### 성구로 넘어가요
+
+### 
+GET http://localhost:3000/bible
+
+

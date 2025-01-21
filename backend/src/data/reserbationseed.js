@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import reservations from "../reservationMock.js";
+import reservations from "../mock/reservationMock.js";
 import Reservation from "../models/Reservation.js";
 import * as dotenv from "dotenv";
 
