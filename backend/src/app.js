@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import RoomRouter from "./routes/rooms.js";
 import ReservationRouter from "./routes/reservation.js";
+import BibleRouter from "./routes/bible.js";
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 // 라우터 연결
 app.use("/", RoomRouter); // '/Room' 라우트 연결
 app.use("/", ReservationRouter); // '/Reservation' 라우트 연결
+app.use("/", BibleRouter);
 
 // 404 처리 (없는 경로 요청)
 app.use((req, res, next) => {

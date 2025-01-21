@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import rooms from "../mock.js";
+import rooms from "../mock/mock.js";
 import Room from "../models/Rooms.js";
 import * as dotenv from "dotenv";
 
