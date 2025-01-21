@@ -1,0 +1,57 @@
+### 회의실 정보 "전체 확인"
+GET http://localhost:3000/rooms
+
+### "특정" 회의실 정보 확인
+GET http://localhost:3000/rooms/678e3d5e584bf6e5afd5a9ff
+
+### 예약 정보 "전체 확인"
+GET http://localhost:3000/reservation
+
+### "특정" 예약 확인
+GET http://localhost:3000/reservation/678e535a0f5bc6159dcea292
+
+### "특정" 회의실에 전체 예약 확인
+GET http://localhost:3000/reservation/room/678e3d5e584bf6e5afd5a9ff
+
+### "특정" 회의실에 예약하기
+POST http://localhost:3000/reservation/678e3d5e584bf6e5afd5a9ff
+Content-Type: application/json
+
+{
+    "title": "피드백",
+    "description": "회의실에서 피드백하기",
+    "startTime": "2025-01-20T13:00:00+09:00",
+    "endTime": "2025-01-20T14:00:00+09:00",
+    "booker" : "장용한"
+}
+
+### '특정' 회의실에 대한 예약 삭제
+DELETE http://localhost:3000/reservation/678fb0e70b2bf1178197ea6e
+
+
+
+
+
+
+### 성구로 넘어가요
+
+### 
+GET http://localhost:3000/bible
+
+
+### 
+GET http://localhost:3000/bible?count=1
+
+###
+POST http://localhost:3000/bible
+Content-Type: application/json
+
+{
+    "verse": "잠언 3:5-6",
+    "text" : "너는 마음을 다하여 여호와를 신뢰하고 네 명철을 의지하지 말라. 너는 범사에 그를 인정하라 그리하면 네 길을 지도하시리라."
+
+}
+
+###
+
+DELETE http://localhost:3000/bible/678f89832a6b3b6ad117bcfc
