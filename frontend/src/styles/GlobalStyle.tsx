@@ -1,14 +1,17 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+
   /* CSS Reset */
   *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
+  
 
   body {
+
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif; /* 기본 폰트 설정 */
@@ -31,6 +34,9 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     cursor: pointer;
   }
+
+
+
 `;
 
 export default GlobalStyle;

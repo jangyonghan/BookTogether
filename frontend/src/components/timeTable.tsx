@@ -3,7 +3,6 @@ import styled from "styled-components";
 const CalendarWrapper = styled.div`
   display: grid;
   grid-template-rows: auto 1fr;
-  gap: 8px;
   width: 100%;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
@@ -27,7 +26,6 @@ const Body = styled.div`
   display: grid;
   grid-template-rows: repeat(24, 40px); /* 시간 슬롯 높이 */
   grid-template-columns: 48px repeat(3, 1fr); /* 시간 + 3일 */
-  gap: 1px;
   position: relative;
 `;
 
@@ -37,12 +35,13 @@ const TimeSlot = styled.div`
   padding: 4px;
   background-color: #f0f0f0;
   border-right: 1px solid #ddd;
+  border: 1px red;
 `;
 
 const Event = styled.div`
   background-color: rgba(255, 0, 0, 0.2); /* 기본 색상 */
   color: #000;
-  border: 1px solid rgba(255, 0, 0, 0.4);
+  border: 1px solid hsla(0, 0%, 100%, 0.4);
   border-radius: 4px;
   padding: 4px;
   text-align: center;
@@ -60,8 +59,24 @@ export default function TimeTable() {
         <Day>Fri 10</Day>
       </Header>
       <Body>
-        <TimeSlot>9AM</TimeSlot>
-        <Event style={{ gridRow: "11 / 12", gridColumn: "2" }}>
+        <TimeSlot>9:00</TimeSlot>
+        <TimeSlot>10:00</TimeSlot>
+        <TimeSlot>11:00</TimeSlot>
+        <TimeSlot>12:00</TimeSlot>
+        <TimeSlot>13:00</TimeSlot>
+        <TimeSlot>14:00</TimeSlot>
+        <TimeSlot>15:00</TimeSlot>
+        <TimeSlot>16:00</TimeSlot>
+        <TimeSlot>17:00</TimeSlot>
+        <TimeSlot>18:00</TimeSlot>
+        <TimeSlot>19:00</TimeSlot>
+        <TimeSlot>20:00</TimeSlot>
+        <TimeSlot>21:00</TimeSlot>
+        <TimeSlot>22:00</TimeSlot>
+        <TimeSlot>23:00</TimeSlot>
+        <TimeSlot>24:00</TimeSlot>
+
+        <Event style={{ gridRow: "9 / 12", gridColumn: "2" }}>
           <span>장용한: 피드백</span>
         </Event>
         <Event style={{ gridRow: "14 / 15", gridColumn: "2" }}>

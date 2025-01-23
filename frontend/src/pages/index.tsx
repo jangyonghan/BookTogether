@@ -2,33 +2,31 @@ import Navbar from "../components/navbar";
 import TimeTable from "../components/timeTable";
 import Bible from "../components/bible";
 import styled from "styled-components";
+import Calendar from "../components/calendar";
 
 const DivWrapper = styled.div`
-  max-width: 400px;
+  max-width: 100%;
   margin: auto;
   padding: 0 5px;
   display: flex;
   flex-direction: column;
   justify-items: center;
+  align-items: center;
 `;
 
 export default function Home() {
   return (
     <>
+      <Navbar />
       <DivWrapper>
-        <Navbar />
         <section>
           <Bible />
         </section>
 
         <section>
           <div>
-            <div>왼쪽 아이콘</div>
-            <span>2025년 1월</span>
-            <div>오른쪽 아이콘</div>
+            <Calendar />
           </div>
-
-          <div>달력 들어가기</div>
         </section>
 
         <section>
