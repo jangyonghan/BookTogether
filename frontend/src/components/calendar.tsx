@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import { ko } from "react-day-picker/locale";
-import Css from "./calenderStyle";
+import Css from "./style/calenderStyle";
 
 export default function Calendar() {
   const [selected, setSelected] = useState<Date>();
 
+  const today = new Date();
   const modifiers = {
-    toDay: new Date(),
+    toDay: today,
   };
 
   const modifiersStyles = {
@@ -17,15 +18,6 @@ export default function Calendar() {
       borderRadius: "50%",
       padding: "1px",
     },
-  };
-
-  const monthCaptionStyle = {
-    borderBottom: "1px solid currentColor",
-    paddingBottom: "0.5em",
-  };
-
-  const month = {
-    color: "red",
   };
 
   return (

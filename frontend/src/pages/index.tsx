@@ -3,6 +3,7 @@ import TimeTable from "../components/timeTable";
 import Bible from "../components/bible";
 import styled from "styled-components";
 import Calendar from "../components/calendar";
+import ReservationStatus from "../components/ReservationStatus";
 
 const DivWrapper = styled.div`
   max-width: 100%;
@@ -13,6 +14,8 @@ const DivWrapper = styled.div`
   justify-items: center;
   align-items: center;
 `;
+
+const ReservationSection = styled.section``;
 
 export default function Home() {
   return (
@@ -30,25 +33,7 @@ export default function Home() {
         </section>
 
         <section>
-          <h2>예약 현황</h2>
-          <div>
-            <div>회의실 1 사진</div>
-            <span>회의실 1</span>
-            <div>회의실 2 사진</div>
-            <span>회의실 2</span>
-            <div>회의실 3 사진</div>
-            <span>회의실 3</span>
-            <div>회의실 3 사진</div>
-            <span>회의실 3</span>
-            <div>회의실 4 사진</div>
-            <span>회의실 4</span>
-            <div>청년부실 사진</div>
-            <span>청년부실</span>
-            <div>대학부실 사진</div>
-            <span>대학부실</span>
-            <div>로비 사진</div>
-            <span>로비</span>
-          </div>
+          <ReservationStatus />
         </section>
       </DivWrapper>
 

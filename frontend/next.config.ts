@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  compiler: {
+    styledComponents: true, // Next.js의 styled-components 지원 활성화
+  },
   reactStrictMode: true,
   webpack: (config) => {
     config.module.rules.push({
