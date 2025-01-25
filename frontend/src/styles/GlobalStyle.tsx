@@ -35,7 +35,10 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
-
+  button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
 
 `;
 

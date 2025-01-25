@@ -14,6 +14,10 @@ const DivWrapper = styled.div`
   justify-items: center;
   align-items: center;
 `;
+const RoomH2 = styled.h2`
+  margin-top: 10px;
+  margin-bottom: 5px;
+`;
 
 const ReservationSection = styled.section``;
 
@@ -33,6 +37,7 @@ export default function Home() {
         </section>
 
         <section>
+          <RoomH2>예약 현황</RoomH2>
           <ReservationStatus />
         </section>
       </DivWrapper>

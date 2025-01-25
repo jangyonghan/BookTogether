@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styled from "styled-components";
 import Business from "@/src/asset/icons/business.svg";
 import Diamond from "@/src/asset/icons/diamond.svg";
@@ -11,14 +10,27 @@ import Home from "@/src/asset/icons/home.svg";
 interface RoomDivProps {
   $bgColor: string;
   $justifyStart?: boolean;
+  $menuWidth?: string;
 }
 
-const RoomWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 100px 100px 100px;
+interface RoomWrapperProps {
+  $singleColumn?: boolean; // 단일 열 여부를 나타내는 props
+  $menuWidth?: string;
+}
 
-  gap: 8px; /* 각 방 사이의 간격 추가 */
+interface ReservationStatusProps {
+  singleColumn?: boolean; // 단일 열 여부를 나타내는 props
+  menuWidth?: string;
+  onRoomClick?: () => void;
+}
+
+const RoomWrapper = styled.div<RoomWrapperProps>`
+  display: grid;
+  grid-template-columns: ${(props) =>
+    props.$singleColumn ? "1fr" : "1fr 1fr 1fr"};
+  gap: 8px;
   margin-bottom: 20px;
+  justify-items: center;
 `;
 
 const RoomDiv = styled.div<RoomDivProps>`
@@ -27,14 +39,9 @@ const RoomDiv = styled.div<RoomDivProps>`
   align-items: center;
   gap: 5px;
   justify-content: ${(props) => (props.$justifyStart ? "start" : "center")};
-  padding-left: ${(props) => (props.$justifyStart ? "5px" : "0")};
-  width: 99px;
+  width: ${(props) => (props.$menuWidth ? "150px" : "100px")};
   height: 40px;
   border-radius: 8px;
-`;
-
-const RoomH2 = styled.h2`
-  margin-top: 10px;
 `;
 
 const rooms = [
@@ -44,26 +51,25 @@ const rooms = [
   { name: "회의실4", icon: Global, bgColor: "#30d1b1" },
   { name: "청년부실", icon: Business, bgColor: "#a0c6ff" },
   { name: "대학부실", icon: School, bgColor: "#efa0ff" },
-  { name: "로비", icon: Game, bgColor: "#b5a0ff", justifyStart: true },
+  { name: "중앙로비", icon: Game, bgColor: "#b5a0ff" },
 ];
 
-export default function ReservationStatus() {
+export default function ReservationStatus({
+  singleColumn,
+  menuWidth,
+  onRoomClick,
+}: ReservationStatusProps) {
   return (
     <>
-      <RoomH2>예약 현황</RoomH2>
-      <RoomWrapper>
+      <RoomWrapper $singleColumn={singleColumn} $menuWidth={menuWidth}>
         {rooms.map((room, index) => (
           <RoomDiv
             key={index}
             $bgColor={room.bgColor}
-            $justifyStart={room.justifyStart}
+            $menuWidth={menuWidth}
+            onClick={onRoomClick}
           >
-            <Image
-              src={room.icon}
-              width={30}
-              height={30}
-              alt={`${room.name} 아이콘`}
-            />
+            <room.icon />
             <span>{room.name}</span>
           </RoomDiv>
         ))}
