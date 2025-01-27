@@ -6,6 +6,8 @@ import Game from "@/src/asset/icons/game.svg";
 import Global from "@/src/asset/icons/global.svg";
 import School from "@/src/asset/icons/school.svg";
 import Home from "@/src/asset/icons/home.svg";
+import BasicModal from "./ui/modal";
+import React from "react";
 
 interface RoomDivProps {
   $bgColor: string;
@@ -22,6 +24,7 @@ interface ReservationStatusProps {
   singleColumn?: boolean; // 단일 열 여부를 나타내는 props
   menuWidth?: string;
   onRoomClick?: () => void;
+  handelOpenModal: boolean;
 }
 
 const RoomWrapper = styled.div<RoomWrapperProps>`
@@ -59,6 +62,16 @@ export default function ReservationStatus({
   menuWidth,
   onRoomClick,
 }: ReservationStatusProps) {
+  const [isModalOpen, setModalOpen] = React.useState(false);
+
+  const handelOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handelCloseModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <>
       <RoomWrapper $singleColumn={singleColumn} $menuWidth={menuWidth}>
@@ -67,13 +80,15 @@ export default function ReservationStatus({
             key={index}
             $bgColor={room.bgColor}
             $menuWidth={menuWidth}
-            onClick={onRoomClick}
+            onClick={handelOpenModal}
           >
             <room.icon />
             <span>{room.name}</span>
           </RoomDiv>
         ))}
       </RoomWrapper>
+
+      <BasicModal open={isModalOpen} onClose={handelCloseModal} />
     </>
   );
 }

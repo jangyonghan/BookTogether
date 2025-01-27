@@ -23,6 +23,8 @@ export default function TemporaryDrawer() {
     setShowReservation((prev) => !prev); // 상태 토글
   };
 
+  const handelReservatinoClcik = () => {};
+
   const menus = [
     {
       name: "예약하기",
@@ -68,6 +70,7 @@ export default function TemporaryDrawer() {
             singleColumn={true}
             menuWidth={"150px"}
             onRoomClick={toggleDrawer(false)}
+            handelOpenModal={true}
           />
         )}
       </List>
