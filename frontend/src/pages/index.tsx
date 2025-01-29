@@ -38,7 +38,7 @@ export default function Home() {
 
         <section>
           <RoomH2>예약 현황</RoomH2>
-          <ReservationStatus />
+          <ReservationStatus singleColumn={false} menuWidth={false} />
         </section>
       </DivWrapper>
 

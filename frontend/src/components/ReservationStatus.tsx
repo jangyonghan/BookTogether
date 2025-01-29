@@ -12,19 +12,19 @@ import React from "react";
 interface RoomDivProps {
   $bgColor: string;
   $justifyStart?: boolean;
-  $menuWidth?: string;
+  $menuWidth?: boolean;
 }
 
 interface RoomWrapperProps {
   $singleColumn?: boolean; // 단일 열 여부를 나타내는 props
-  $menuWidth?: string;
+  $menuWidth?: boolean;
 }
 
 interface ReservationStatusProps {
   singleColumn?: boolean; // 단일 열 여부를 나타내는 props
-  menuWidth?: string;
+  menuWidth?: boolean;
   onRoomClick?: () => void;
-  handelOpenModal: boolean;
+  handelOpenModal?: boolean;
 }
 
 const RoomWrapper = styled.div<RoomWrapperProps>`
@@ -60,7 +60,6 @@ const rooms = [
 export default function ReservationStatus({
   singleColumn,
   menuWidth,
-  onRoomClick,
 }: ReservationStatusProps) {
   const [isModalOpen, setModalOpen] = React.useState(false);
 

@@ -20,10 +20,8 @@ export default function TemporaryDrawer() {
   };
 
   const toggleReservationStatus = () => {
-    setShowReservation((prev) => !prev); // 상태 토글
+    setShowReservation((prev) => !prev);
   };
-
-  const handelReservatinoClcik = () => {};
 
   const menus = [
     {
@@ -68,7 +66,7 @@ export default function TemporaryDrawer() {
         {showReservation && (
           <ReservationStatus
             singleColumn={true}
-            menuWidth={"150px"}
+            menuWidth={true}
             onRoomClick={toggleDrawer(false)}
             handelOpenModal={true}
           />
