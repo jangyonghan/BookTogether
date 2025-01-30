@@ -19,6 +19,9 @@ const nextConfig: NextConfig = {
             },
           },
         ],
+        resolve: {
+          fullySpecified: false, // ✅ ESM 모듈을 제대로 가져오기 위해 추가
+        },
       },
       {
         test: /\.svg$/, // .svg 파일 처리
@@ -45,6 +48,7 @@ const nextConfig: NextConfig = {
 
     return config; // Webpack 설정 반환
   },
+  transpilePackages: ["@mui/x-date-pickers", "@mui/x-date-pickers-pro"], // ✅ ESM 패키지 변환
 };
 
 export default nextConfig;

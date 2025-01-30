@@ -6,31 +6,15 @@ import Game from "@/src/asset/icons/game.svg";
 import Global from "@/src/asset/icons/global.svg";
 import School from "@/src/asset/icons/school.svg";
 import Home from "@/src/asset/icons/home.svg";
-import BasicModal from "./ui/modal";
 import React from "react";
 
 interface RoomDivProps {
   $bgColor: string;
-  $justifyStart?: boolean;
-  $menuWidth?: boolean;
 }
 
-interface RoomWrapperProps {
-  $singleColumn?: boolean; // 단일 열 여부를 나타내는 props
-  $menuWidth?: boolean;
-}
-
-interface ReservationStatusProps {
-  singleColumn?: boolean; // 단일 열 여부를 나타내는 props
-  menuWidth?: boolean;
-  onRoomClick?: () => void;
-  handelOpenModal?: boolean;
-}
-
-const RoomWrapper = styled.div<RoomWrapperProps>`
+const RoomWrapper = styled.div`
   display: grid;
-  grid-template-columns: ${(props) =>
-    props.$singleColumn ? "1fr" : "1fr 1fr 1fr"};
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 8px;
   margin-bottom: 20px;
   justify-items: center;
@@ -41,8 +25,8 @@ const RoomDiv = styled.div<RoomDivProps>`
   display: flex;
   align-items: center;
   gap: 5px;
-  justify-content: ${(props) => (props.$justifyStart ? "start" : "center")};
-  width: ${(props) => (props.$menuWidth ? "150px" : "100px")};
+  justify-content: center;
+  width: 100px;
   height: 40px;
   border-radius: 8px;
 `;
@@ -57,37 +41,17 @@ const rooms = [
   { name: "중앙로비", icon: Game, bgColor: "#b5a0ff" },
 ];
 
-export default function ReservationStatus({
-  singleColumn,
-  menuWidth,
-}: ReservationStatusProps) {
-  const [isModalOpen, setModalOpen] = React.useState(false);
-
-  const handelOpenModal = () => {
-    setModalOpen(true);
-  };
-
-  const handelCloseModal = () => {
-    setModalOpen(false);
-  };
-
+export default function ReservationStatus() {
   return (
     <>
-      <RoomWrapper $singleColumn={singleColumn} $menuWidth={menuWidth}>
+      <RoomWrapper>
         {rooms.map((room, index) => (
-          <RoomDiv
-            key={index}
-            $bgColor={room.bgColor}
-            $menuWidth={menuWidth}
-            onClick={handelOpenModal}
-          >
+          <RoomDiv key={index} $bgColor={room.bgColor}>
             <room.icon />
             <span>{room.name}</span>
           </RoomDiv>
         ))}
       </RoomWrapper>
-
-      <BasicModal open={isModalOpen} onClose={handelCloseModal} />
     </>
   );
 }

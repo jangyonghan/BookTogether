@@ -1,0 +1,36 @@
+import React from "react";
+import styled from "styled-components";
+import BasicModal from "./modal";
+
+const Button = styled.button`
+  display: inline-block;
+  background-color: #e0418b;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 15px 25px;
+  border-radius: 30px;
+  position: fixed;
+  bottom: 30px;
+  right: 15px;
+  z-index: 10;
+`;
+
+export default function ReservationButton() {
+  const [isModalOpen, setModalOpen] = React.useState(false);
+
+  const handelOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handelCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  return (
+    <>
+      <Button onClick={handelOpenModal}>예약하기</Button>
+      <BasicModal open={isModalOpen} onClose={handelCloseModal} />
+    </>
+  );
+}

@@ -1,3 +1,5 @@
+// 나중에 프로젝트 확장시 사이드 바 추가하자
+
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -9,9 +11,8 @@ import ListItemText from "@mui/material/ListItemText";
 import Menu from "@/src/asset/icons/Menu.svg";
 import ReservationIcon from "@/src/asset/icons/reservationIcon.svg";
 import DropdownIcon from "@/src/asset/icons/arrowDropDown.svg";
-import ReservationStatus from "../ReservationStatus";
 
-export default function TemporaryDrawer() {
+export default function SideBarMenu() {
   const [open, setOpen] = React.useState(false);
   const [showReservation, setShowReservation] = React.useState(false);
 
@@ -63,14 +64,6 @@ export default function TemporaryDrawer() {
             </ListItemButton>
           </ListItem>
         ))}
-        {showReservation && (
-          <ReservationStatus
-            singleColumn={true}
-            menuWidth={true}
-            onRoomClick={toggleDrawer(false)}
-            handelOpenModal={true}
-          />
-        )}
       </List>
     </Box>
   );
