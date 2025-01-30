@@ -4,6 +4,7 @@ import Bible from "../components/bible";
 import styled from "styled-components";
 import Calendar from "../components/calendar";
 import ReservationStatus from "../components/ReservationStatus";
+import ReservationButton from "../components/ui/reservationButton";
 
 const DivWrapper = styled.div`
   max-width: 100%;
@@ -19,11 +20,10 @@ const RoomH2 = styled.h2`
   margin-bottom: 5px;
 `;
 
-const ReservationSection = styled.section``;
-
 export default function Home() {
   return (
     <>
+      <ReservationButton />
       <Navbar />
       <DivWrapper>
         <section>
@@ -41,7 +41,6 @@ export default function Home() {
           <ReservationStatus />
         </section>
       </DivWrapper>
-
       <section>
         <TimeTable />
       </section>
