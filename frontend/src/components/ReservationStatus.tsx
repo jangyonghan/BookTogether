@@ -6,10 +6,11 @@ import Game from "@/src/asset/icons/game.svg";
 import Global from "@/src/asset/icons/global.svg";
 import School from "@/src/asset/icons/school.svg";
 import Home from "@/src/asset/icons/home.svg";
-import React from "react";
+import React, { useState } from "react";
 
 interface RoomDivProps {
   $bgColor: string;
+  $isSelected: boolean;
 }
 
 const RoomWrapper = styled.div`
@@ -29,6 +30,18 @@ const RoomDiv = styled.div<RoomDivProps>`
   width: 100px;
   height: 40px;
   border-radius: 8px;
+  cursor: pointer;
+  border: ${(props) =>
+    props.$isSelected
+      ? "3px solid #e0518b"
+      : "none"}; /* 선택된 경우 테두리 추가 */
+`;
+
+const RoomName = styled.span`
+  color: white;
+  &:focus {
+    border: solid 3px red;
+  }
 `;
 
 const rooms = [
@@ -42,13 +55,23 @@ const rooms = [
 ];
 
 export default function ReservationStatus() {
+  const [selectRoom, setSelectRoom] = useState<string | null>(null);
+
+  const handleRoomClick = (roomName: string) => {
+    setSelectRoom(roomName);
+  };
   return (
     <>
       <RoomWrapper>
         {rooms.map((room, index) => (
-          <RoomDiv key={index} $bgColor={room.bgColor}>
+          <RoomDiv
+            key={index}
+            $bgColor={room.bgColor}
+            $isSelected={selectRoom === room.name}
+            onClick={() => handleRoomClick(room.name)}
+          >
             <room.icon />
-            <span>{room.name}</span>
+            <RoomName>{room.name}</RoomName>
           </RoomDiv>
         ))}
       </RoomWrapper>
