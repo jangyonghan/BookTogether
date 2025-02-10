@@ -9,6 +9,9 @@ const RoomsSchema = new mongoose.Schema(
     capacity: {
       type: Number,
     },
+    bgColor: {
+      type: String,
+    },
   },
   {
     timestamps: true,
