@@ -1,5 +1,5 @@
 import Navbar from "../components/navbar";
-import TimeTable from "../components/timeTable";
+import MyCalendar from "../components/timeTable";
 import Bible from "../components/bible";
 import styled from "styled-components";
 import Calendar from "../components/calendar";
@@ -18,6 +18,7 @@ const DivWrapper = styled.div`
 const RoomH2 = styled.h2`
   margin-top: 10px;
   margin-bottom: 5px;
+  font-size: 24px;
 `;
 
 export default function Home() {
@@ -42,7 +43,7 @@ export default function Home() {
         </section>
       </DivWrapper>
       <section>
-        <TimeTable />
+        <MyCalendar />
       </section>
     </>
   );

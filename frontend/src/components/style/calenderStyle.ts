@@ -197,7 +197,7 @@ const Css = `
   align-content: center;
   height: var(--rdp-nav-height);
   font-weight: bold;
-  font-size: large;
+  font-size: 24px;
 }
 
 .rdp-months {

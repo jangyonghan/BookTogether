@@ -31,17 +31,11 @@ const RoomDiv = styled.div<RoomDivProps>`
   height: 40px;
   border-radius: 8px;
   cursor: pointer;
-  border: ${(props) =>
-    props.$isSelected
-      ? "3px solid #e0518b"
-      : "none"}; /* 선택된 경우 테두리 추가 */
+  opacity: ${(props) => (props.$isSelected ? 1 : 0.4)};
 `;
 
 const RoomName = styled.span`
   color: white;
-  &:focus {
-    border: solid 3px red;
-  }
 `;
 
 const rooms = [
@@ -59,6 +53,7 @@ export default function ReservationStatus() {
 
   const handleRoomClick = (roomName: string) => {
     setSelectRoom(roomName);
+    console.log(roomName);
   };
   return (
     <>

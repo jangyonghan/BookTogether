@@ -5,7 +5,7 @@ import { useBible } from "../hook/useBible";
 const BibleWrapper = styled.div`
   width: 100%;
   height: 191px;
-  min-width: 308px;
+  max-width: 1000px;
   background-image: url(${BibleBackground.src});
   background-size: cover;
   background-position: center; /* 이미지를 중앙에 배치 */
