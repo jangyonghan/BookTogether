@@ -7,6 +7,7 @@ import Global from "@/src/asset/icons/global.svg";
 import School from "@/src/asset/icons/school.svg";
 import Home from "@/src/asset/icons/home.svg";
 import React, { useState } from "react";
+import { useRooms } from "../hook/useRooms";
 
 interface RoomDivProps {
   $bgColor: string;
@@ -38,18 +39,29 @@ const RoomName = styled.span`
   color: white;
 `;
 
-const rooms = [
-  { name: "회의실1", icon: Home, bgColor: "#ffa0a0" },
-  { name: "회의실2", icon: Flower, bgColor: "#fcb213" },
-  { name: "회의실3", icon: Diamond, bgColor: "#3dd09d" },
-  { name: "회의실4", icon: Global, bgColor: "#30d1b1" },
-  { name: "청년부실", icon: Business, bgColor: "#a0c6ff" },
-  { name: "대학부실", icon: School, bgColor: "#efa0ff" },
-  { name: "중앙로비", icon: Game, bgColor: "#b5a0ff" },
-];
+const roomIcons: Record<string, React.ElementType> = {
+  회의실1: Home,
+  회의실2: Flower,
+  회의실3: Diamond,
+  회의실4: Global,
+  청년부실: Business,
+  대학부실: School,
+  중앙로비: Game,
+};
 
 export default function ReservationStatus() {
   const [selectRoom, setSelectRoom] = useState<string | null>(null);
+  const { data, isLoading, isError } = useRooms();
+
+  if (isLoading) {
+    return <>로딩중</>;
+  }
+
+  if (isError) {
+    return <>네트워크 에러</>;
+  }
+
+  const roomList = Array.isArray(data) ? data : [];
 
   const handleRoomClick = (roomName: string) => {
     setSelectRoom(roomName);
@@ -58,17 +70,20 @@ export default function ReservationStatus() {
   return (
     <>
       <RoomWrapper>
-        {rooms.map((room, index) => (
-          <RoomDiv
-            key={index}
-            $bgColor={room.bgColor}
-            $isSelected={selectRoom === room.name}
-            onClick={() => handleRoomClick(room.name)}
-          >
-            <room.icon />
-            <RoomName>{room.name}</RoomName>
-          </RoomDiv>
-        ))}
+        {roomList?.map((room, index) => {
+          const IconComponent = roomIcons[room.name] || Home;
+          return (
+            <RoomDiv
+              key={index}
+              $bgColor={room.bgColor}
+              $isSelected={selectRoom === room.name}
+              onClick={() => handleRoomClick(room.name)}
+            >
+              <IconComponent />
+              <RoomName>{room.name}</RoomName>
+            </RoomDiv>
+          );
+        })}
       </RoomWrapper>
     </>
   );

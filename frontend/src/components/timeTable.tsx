@@ -5,9 +5,9 @@ import styled from "styled-components";
 
 const CalendarWrapper = styled.div`
   .fc-event {
-    background-color: red !important;
-    color: black !important;
-    border: none !important;
+    background-color: red;
+    color: black;
+    border: none;
   }
   .fc-toolbar-title {
     font-size: 18px;
@@ -15,7 +15,7 @@ const CalendarWrapper = styled.div`
   }
 
   .fc-view-container {
-    height: auto !important;
+    height: auto;
   }
 `;
 
