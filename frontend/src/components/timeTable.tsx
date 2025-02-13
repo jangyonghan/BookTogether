@@ -2,6 +2,8 @@ import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import styled from "styled-components";
 import { useCalendarStore } from "../store/useCalendarStore";
+import { timeMockData } from "@/src/components/mock/timeMockdata";
+import { useRoomStore } from "../store/useRoomStore";
 
 const CalendarWrapper = styled.div`
   .fc-event {
@@ -21,26 +23,13 @@ const CalendarWrapper = styled.div`
 
 const MyCalendar = () => {
   const { selectedDate } = useCalendarStore();
+  const { selectedRoom } = useRoomStore();
 
-  const events = [
-    {
-      title: "김두한: 회의",
-      start: "2025-02-13T10:00:00",
-      end: "2025-02-13T12:00:00",
-    },
-    {
-      title: "장용한: 피드백",
-      start: "2025-02-09T11:00:00",
-      end: "2025-02-09T12:00:00",
-    },
-    {
-      title: "김윤길: 회의",
-      start: "2025-02-10T15:00:00",
-      end: "2025-02-10T16:00:00",
-    },
-  ];
-
-  console.log("selectedDate:", selectedDate);
+  //회의실별 데이터 가져오기
+  const filteredEvents = timeMockData.filter(
+    (event) => event.roomId === selectedRoom
+  );
+  console.log(filteredEvents);
 
   return (
     <CalendarWrapper>
@@ -58,7 +47,7 @@ const MyCalendar = () => {
           },
         }}
         initialDate={selectedDate} // 초기 날짜 설정
-        events={events}
+        events={filteredEvents}
         slotMinTime="09:00:00" // 9:00 AM부터 시작
         slotMaxTime="23:59:00" // 12:00 AM까지 표시
         height="auto"

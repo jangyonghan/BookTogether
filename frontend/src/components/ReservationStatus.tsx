@@ -8,6 +8,7 @@ import School from "@/src/asset/icons/school.svg";
 import Home from "@/src/asset/icons/home.svg";
 import React, { useState } from "react";
 import { useRooms } from "../hook/useRooms";
+import { useRoomStore } from "../store/useRoomStore";
 
 interface RoomDivProps {
   $bgColor: string;
@@ -50,7 +51,7 @@ const roomIcons: Record<string, React.ElementType> = {
 };
 
 export default function ReservationStatus() {
-  const [selectRoom, setSelectRoom] = useState<string | null>(null);
+  const { selectedRoom, setSelectedRoom } = useRoomStore();
   const { data, isLoading, isError } = useRooms();
 
   if (isLoading) {
@@ -63,10 +64,6 @@ export default function ReservationStatus() {
 
   const roomList = Array.isArray(data) ? data : [];
 
-  const handleRoomClick = (roomName: string) => {
-    setSelectRoom(roomName);
-    console.log(roomName);
-  };
   return (
     <>
       <RoomWrapper>
@@ -76,8 +73,8 @@ export default function ReservationStatus() {
             <RoomDiv
               key={room.id}
               $bgColor={room.bgColor}
-              $isSelected={selectRoom === room.name}
-              onClick={() => handleRoomClick(room.name)}
+              $isSelected={selectedRoom === room.name}
+              onClick={() => setSelectedRoom(room.name)}
             >
               <IconComponent />
               <RoomName>{room.name}</RoomName>
