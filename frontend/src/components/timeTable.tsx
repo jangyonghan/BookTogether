@@ -2,8 +2,8 @@ import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import styled from "styled-components";
 import { useCalendarStore } from "../store/useCalendarStore";
-import { timeMockData } from "@/src/components/mock/timeMockdata";
 import { useRoomStore } from "../store/useRoomStore";
+import { useReservation } from "../hook/useReservation";
 
 const CalendarWrapper = styled.div`
   .fc-event {
@@ -24,12 +24,22 @@ const CalendarWrapper = styled.div`
 const MyCalendar = () => {
   const { selectedDate } = useCalendarStore();
   const { selectedRoom } = useRoomStore();
+  const { data } = useReservation();
+
+  const reservationData = Array.isArray(data) ? data : [data];
+  console.log(reservationData);
 
   //회의실별 데이터 가져오기
-  const filteredEvents = timeMockData.filter(
+  const filteredEvents = reservationData.filter(
     (event) => event.roomId === selectedRoom
   );
-  console.log(filteredEvents);
+
+  const formattedEvents = filteredEvents.map((event) => ({
+    title: event.title,
+    start: event.startTime,
+    end: event.endTime,
+    id: event._id,
+  }));
 
   return (
     <CalendarWrapper>
@@ -42,14 +52,14 @@ const MyCalendar = () => {
         views={{
           timeGridThreeDay: {
             type: "timeGrid",
-            duration: { days: 3 }, // 3일간 보기
+            duration: { days: 3 },
             buttonText: "3일 보기",
           },
         }}
-        initialDate={selectedDate} // 초기 날짜 설정
-        events={filteredEvents}
-        slotMinTime="09:00:00" // 9:00 AM부터 시작
-        slotMaxTime="23:59:00" // 12:00 AM까지 표시
+        initialDate={selectedDate} // 초기날짜
+        events={formattedEvents}
+        slotMinTime="09:00:00"
+        slotMaxTime="23:59:00"
         height="auto"
         contentHeight="auto"
       />

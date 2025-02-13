@@ -71,10 +71,10 @@ export default function ReservationStatus() {
           const IconComponent = roomIcons[room.name] || Home;
           return (
             <RoomDiv
-              key={room.id}
+              key={room._id}
               $bgColor={room.bgColor}
-              $isSelected={selectedRoom === room.name}
-              onClick={() => setSelectedRoom(room.name)}
+              $isSelected={selectedRoom === room._id}
+              onClick={() => setSelectedRoom(room._id)}
             >
               <IconComponent />
               <RoomName>{room.name}</RoomName>
