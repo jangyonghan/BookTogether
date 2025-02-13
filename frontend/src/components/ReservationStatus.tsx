@@ -70,11 +70,11 @@ export default function ReservationStatus() {
   return (
     <>
       <RoomWrapper>
-        {roomList?.map((room, index) => {
+        {roomList?.map((room) => {
           const IconComponent = roomIcons[room.name] || Home;
           return (
             <RoomDiv
-              key={index}
+              key={room.id}
               $bgColor={room.bgColor}
               $isSelected={selectRoom === room.name}
               onClick={() => handleRoomClick(room.name)}
