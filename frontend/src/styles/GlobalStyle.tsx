@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
     src: url("/fonts/Ownglyph.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
-    font-display: block;
+    font-display: swap;
   }
   
 

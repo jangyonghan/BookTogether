@@ -7,9 +7,9 @@ import { useReservation } from "../hook/useReservation";
 
 const CalendarWrapper = styled.div`
   .fc-event {
-    background-color: red;
+    background-color: #e0418b;
     color: black;
-    border: none;
+    border: 1px solid #f5f5f5;
   }
   .fc-toolbar-title {
     font-size: 18px;
@@ -27,11 +27,10 @@ const MyCalendar = () => {
   const { data } = useReservation();
 
   const reservationData = Array.isArray(data) ? data : [data];
-  console.log(reservationData);
 
-  //회의실별 데이터 가져오기
+  //회의실별 데이터
   const filteredEvents = reservationData.filter(
-    (event) => event.roomId === selectedRoom
+    (event) => event?.roomId === selectedRoom
   );
 
   const formattedEvents = filteredEvents.map((event) => ({

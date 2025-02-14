@@ -54,10 +54,6 @@ export default function ReservationStatus() {
   const { selectedRoom, setSelectedRoom } = useRoomStore();
   const { data, isLoading, isError } = useRooms();
 
-  if (isLoading) {
-    return <>로딩중</>;
-  }
-
   if (isError) {
     return <>네트워크 에러</>;
   }
@@ -82,6 +78,8 @@ export default function ReservationStatus() {
           );
         })}
       </RoomWrapper>
+      {isLoading && <div>🔄 데이터 로딩 중...</div>}{" "}
+      {/* ✅ 로딩 중에도 기존 데이터 유지 */}
     </>
   );
 }
