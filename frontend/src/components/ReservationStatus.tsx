@@ -79,7 +79,6 @@ export default function ReservationStatus() {
         })}
       </RoomWrapper>
       {isLoading && <div>🔄 데이터 로딩 중...</div>}{" "}
-      {/* ✅ 로딩 중에도 기존 데이터 유지 */}
     </>
   );
 }

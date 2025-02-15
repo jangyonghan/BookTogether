@@ -34,10 +34,10 @@ const MyCalendar = () => {
   );
 
   const formattedEvents = filteredEvents.map((event) => ({
-    title: event.title,
+    id: event._id,
+    title: `${event.booker} - ${event.title}`,
     start: event.startTime,
     end: event.endTime,
-    id: event._id,
   }));
 
   return (
