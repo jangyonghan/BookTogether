@@ -1,13 +1,15 @@
-import { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import styled from "styled-components";
+import { useCalendarStore } from "../store/useCalendarStore";
+import { useRoomStore } from "../store/useRoomStore";
+import { useReservation } from "../hook/useReservation";
 
 const CalendarWrapper = styled.div`
   .fc-event {
-    background-color: red;
+    background-color: #e0418b;
     color: black;
-    border: none;
+    border: 1px solid #f5f5f5;
   }
   .fc-toolbar-title {
     font-size: 18px;
@@ -20,27 +22,28 @@ const CalendarWrapper = styled.div`
 `;
 
 const MyCalendar = () => {
-  const [events, setEvents] = useState([
-    {
-      title: "김두한: 회의",
-      start: "2024-02-08T10:00:00",
-      end: "2024-02-08T12:00:00",
-    },
-    {
-      title: "장용한: 피드백",
-      start: "2024-02-09T11:00:00",
-      end: "2024-02-09T12:00:00",
-    },
-    {
-      title: "김윤길: 회의",
-      start: "2024-02-10T15:00:00",
-      end: "2024-02-10T16:00:00",
-    },
-  ]);
+  const { selectedDate } = useCalendarStore();
+  const { selectedRoom } = useRoomStore();
+  const { data } = useReservation();
+
+  const reservationData = Array.isArray(data) ? data : [data];
+
+  //회의실별 데이터
+  const filteredEvents = reservationData.filter(
+    (event) => event?.roomId === selectedRoom
+  );
+
+  const formattedEvents = filteredEvents.map((event) => ({
+    id: event._id,
+    title: `${event.booker} - ${event.title}`,
+    start: event.startTime,
+    end: event.endTime,
+  }));
 
   return (
     <CalendarWrapper>
       <FullCalendar
+        key={selectedDate}
         locale={"ko"}
         plugins={[timeGridPlugin]}
         initialView="timeGridThreeDay"
@@ -48,14 +51,14 @@ const MyCalendar = () => {
         views={{
           timeGridThreeDay: {
             type: "timeGrid",
-            duration: { days: 3 }, // 3일간 보기
+            duration: { days: 3 },
             buttonText: "3일 보기",
           },
         }}
-        initialDate="2024-02-08" // 초기 날짜 설정
-        events={events}
-        slotMinTime="09:00:00" // 9:00 AM부터 시작
-        slotMaxTime="23:59:00" // 12:00 AM까지 표시
+        initialDate={selectedDate} // 초기날짜
+        events={formattedEvents}
+        slotMinTime="09:00:00"
+        slotMaxTime="23:59:00"
         height="auto"
         contentHeight="auto"
       />

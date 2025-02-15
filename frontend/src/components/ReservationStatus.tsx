@@ -8,6 +8,7 @@ import School from "@/src/asset/icons/school.svg";
 import Home from "@/src/asset/icons/home.svg";
 import React, { useState } from "react";
 import { useRooms } from "../hook/useRooms";
+import { useRoomStore } from "../store/useRoomStore";
 
 interface RoomDivProps {
   $bgColor: string;
@@ -50,12 +51,8 @@ const roomIcons: Record<string, React.ElementType> = {
 };
 
 export default function ReservationStatus() {
-  const [selectRoom, setSelectRoom] = useState<string | null>(null);
+  const { selectedRoom, setSelectedRoom } = useRoomStore();
   const { data, isLoading, isError } = useRooms();
-
-  if (isLoading) {
-    return <>로딩중</>;
-  }
 
   if (isError) {
     return <>네트워크 에러</>;
@@ -63,21 +60,17 @@ export default function ReservationStatus() {
 
   const roomList = Array.isArray(data) ? data : [];
 
-  const handleRoomClick = (roomName: string) => {
-    setSelectRoom(roomName);
-    console.log(roomName);
-  };
   return (
     <>
       <RoomWrapper>
-        {roomList?.map((room, index) => {
+        {roomList?.map((room) => {
           const IconComponent = roomIcons[room.name] || Home;
           return (
             <RoomDiv
-              key={index}
+              key={room._id}
               $bgColor={room.bgColor}
-              $isSelected={selectRoom === room.name}
-              onClick={() => handleRoomClick(room.name)}
+              $isSelected={selectedRoom === room._id}
+              onClick={() => setSelectedRoom(room._id)}
             >
               <IconComponent />
               <RoomName>{room.name}</RoomName>
@@ -85,6 +78,7 @@ export default function ReservationStatus() {
           );
         })}
       </RoomWrapper>
+      {isLoading && <div>🔄 데이터 로딩 중...</div>}{" "}
     </>
   );
 }
