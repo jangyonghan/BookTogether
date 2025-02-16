@@ -1,5 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { fetchReservation, fetchReservationAdd } from "../api/reservation";
+import {
+  fetchReservation,
+  fetchReservationAdd,
+  fetchReservationDelete,
+} from "../api/reservation";
 import { fetchReservationAddProps } from "../types/reservationAddType";
 
 interface defaultReservationType {
@@ -34,6 +38,16 @@ export const useReservationAdd = () => {
         endTime,
         booker,
       }),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["reservation"] });
+    },
+  });
+};
+
+export const useReservationDelete = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: fetchReservationDelete,
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["reservation"] });
     },
