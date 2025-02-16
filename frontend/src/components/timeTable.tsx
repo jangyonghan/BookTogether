@@ -4,6 +4,9 @@ import styled from "styled-components";
 import { useCalendarStore } from "../store/useCalendarStore";
 import { useRoomStore } from "../store/useRoomStore";
 import { useReservation } from "../hook/useReservation";
+import { useState } from "react";
+import DeleteModal from "./ui/deleteModal";
+import { EventClickArg } from "@fullcalendar/core";
 
 const CalendarWrapper = styled.div`
   .fc-event {
@@ -25,6 +28,10 @@ const MyCalendar = () => {
   const { selectedDate } = useCalendarStore();
   const { selectedRoom } = useRoomStore();
   const { data } = useReservation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedReservationId, setSelectedReservationId] = useState<
+    string | null
+  >(null);
 
   const reservationData = Array.isArray(data) ? data : [data];
 
@@ -39,6 +46,12 @@ const MyCalendar = () => {
     start: event.startTime,
     end: event.endTime,
   }));
+
+  const handelClickEvent = (clickInfo: EventClickArg) => {
+    console.log(clickInfo.event.id);
+    setSelectedReservationId(clickInfo.event.id);
+    setIsModalOpen(true);
+  };
 
   return (
     <CalendarWrapper>
@@ -61,7 +74,16 @@ const MyCalendar = () => {
         slotMaxTime="23:59:00"
         height="auto"
         contentHeight="auto"
+        eventClick={handelClickEvent}
       />
+
+      {isModalOpen && (
+        <DeleteModal
+          reservationId={selectedReservationId}
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </CalendarWrapper>
   );
 };

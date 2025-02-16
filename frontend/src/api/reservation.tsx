@@ -21,3 +21,8 @@ export const fetchReservationAdd = async ({
   });
   return response.data;
 };
+
+export const fetchReservationDelete = async (reservationId: string | null) => {
+  const response = await AxiosInstance.delete(`reservation/${reservationId}`);
+  return response.data;
+};
