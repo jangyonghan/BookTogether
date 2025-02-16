@@ -48,6 +48,24 @@ router.post(
     const { roomId } = req.params;
     const { title, description, startTime, endTime, booker } = req.body;
 
+    const now = new Date();
+    const maxDate = new Date();
+    maxDate.setDate(now.getDate() + 30); // 오늘로부터 30일 후
+
+    // 30일 이후의 예약 방지
+    if (new Date(startTime) > maxDate) {
+      return res.status(400).json({
+        message: "예약은 30일 이내로만 가능합니다.",
+      });
+    }
+
+    // endTime이 startTime보다 빠르게 설정되지 않도록
+    if (new Date(startTime) >= new Date(endTime)) {
+      return res.status(400).json({
+        message: "시작 시간은 종료 시간보다 빨라야 합니다.",
+      });
+    }
+
     const overlappingReservations = await Reservation.find({
       roomId, // 같은 회의실에 대해
       $or: [
@@ -56,12 +74,13 @@ router.post(
     });
 
     if (overlappingReservations.length > 0) {
-      return res
-        .status(400)
-        .json({
-          message: "Reservation time overlaps with an existing reservation.",
-        });
+      return res.status(400).json({
+        message: "중복된 예약이 존재합니다.",
+      });
     }
+
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 30);
 
     const reservation = await Reservation.create({
       title,
@@ -70,6 +89,7 @@ router.post(
       startTime,
       endTime,
       booker,
+      expiresAt,
     });
     res.status(201).json(reservation);
   })
