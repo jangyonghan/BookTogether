@@ -79,7 +79,7 @@ const MyCalendar = () => {
         }}
         initialDate={selectedDate} // 초기날짜
         events={formattedEvents}
-        slotMinTime="09:00:00"
+        slotMinTime="00:00:00"
         slotMaxTime="23:59:00"
         height="auto"
         contentHeight="auto"
