@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <link rel="icon" href="/favicon.png" />
         <link
           rel="preload"
           href="/fonts/Ownglyph.ttf"
