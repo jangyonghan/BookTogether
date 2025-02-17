@@ -26,6 +26,7 @@ const ReservationSchema = new mongoose.Schema(
     booker: {
       type: String,
     },
+    expiresAt: { type: Date, index: { expires: "30d" } }, // 30일 후 자동 삭제
   },
   {
     timestamps: true, // createdAt, updatedAt 자동 생성
