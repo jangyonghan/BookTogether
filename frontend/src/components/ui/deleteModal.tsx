@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useReservationDelete } from "@/src/hook/useReservation";
 import styled from "styled-components";
+import SnackBar from "./snackBar";
 
 const style = {
   position: "fixed",
@@ -57,18 +58,21 @@ interface DeleteModalProps {
   open: boolean; // event가 없을 수도 있으므로 `null` 허용
   onClose: () => void; // 모달 닫기 함수
   reservationId: string | null;
+  onDeleteSuccess: () => void;
 }
 
 export default function DeleteModal({
   open,
   onClose,
   reservationId,
+  onDeleteSuccess,
 }: DeleteModalProps) {
   const mutation = useReservationDelete();
 
   const handelDelete = () => {
     mutation.mutate(reservationId);
     onClose();
+    onDeleteSuccess();
   };
 
   return (

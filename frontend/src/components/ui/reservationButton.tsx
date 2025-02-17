@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import BasicModal from "./modal";
+import { useSnackbarStore } from "@/src/store/useSnackbarStore";
 
 const Button = styled.button`
   display: inline-block;
@@ -18,6 +19,7 @@ const Button = styled.button`
 
 export default function ReservationButton() {
   const [isModalOpen, setModalOpen] = React.useState(false);
+  const { openSnackbar } = useSnackbarStore();
 
   const handelOpenModal = () => {
     setModalOpen(true);
@@ -30,7 +32,11 @@ export default function ReservationButton() {
   return (
     <>
       <Button onClick={handelOpenModal}>예약하기</Button>
-      <BasicModal open={isModalOpen} onClose={handelCloseModal} />
+      <BasicModal
+        open={isModalOpen}
+        onClose={handelCloseModal}
+        onCompleteSuccess={() => openSnackbar("reservation")}
+      />
     </>
   );
 }

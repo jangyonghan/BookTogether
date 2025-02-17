@@ -40,18 +40,22 @@ const style = {
 interface BasicModalProps {
   open: boolean;
   onClose: () => void;
+  onCompleteSuccess: () => void;
 }
 
-export default function BasicModal({ open, onClose }: BasicModalProps) {
+export default function BasicModal({
+  open,
+  onClose,
+  onCompleteSuccess,
+}: BasicModalProps) {
   const [room, setRoom] = React.useState("");
   const [purpose, setPurpose] = React.useState("");
   const [userName, setUserName] = React.useState("");
-  const [time, setTime] = React.useState<Dayjs | null>(null);
   const { mutate } = useReservationAdd();
   const { data } = useRooms();
   const [startTime, setStartTime] = React.useState<Dayjs | null>(null);
   const [endTime, setEndTime] = React.useState<Dayjs | null>(null);
-  const { selectedDate, setSelectedDate } = useCalendarStore();
+  const { selectedDate } = useCalendarStore();
 
   const roomList = Array.isArray(data) ? data : [];
   const rooms = roomList?.map((room) => ({
@@ -92,11 +96,10 @@ export default function BasicModal({ open, onClose }: BasicModalProps) {
       booker: userName,
     };
 
-    console.log("예약 정보:", newEvent);
-
     mutate(newEvent, {
       onSuccess: () => {
-        alert("예약완료");
+        onCompleteSuccess();
+        handelClose();
       },
       onError: (error) => {
         const axiosError = error as AxiosError;
@@ -113,8 +116,6 @@ export default function BasicModal({ open, onClose }: BasicModalProps) {
         return;
       },
     });
-
-    handelClose();
   };
 
   return (

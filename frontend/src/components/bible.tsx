@@ -6,6 +6,7 @@ const BibleWrapper = styled.div`
   width: 100%;
   height: 191px;
   max-width: 1000px;
+  min-width: 316px;
   padding: 20px 10px;
   border-radius: 10px;
   background-image: url(${BibleBackground.src});
