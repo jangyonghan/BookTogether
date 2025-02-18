@@ -2,12 +2,17 @@ import { DayPicker } from "react-day-picker";
 import { ko } from "react-day-picker/locale";
 import Css from "./style/calenderStyle";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 import { useCalendarStore } from "../store/useCalendarStore";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export default function Calendar() {
   const { selectedDate, setSelectedDate } = useCalendarStore();
 
-  const today = new Date();
+  const today = dayjs().tz("Asia/Seoul").toDate();
   const modifiers = {
     toDay: today,
   };
