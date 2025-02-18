@@ -28,7 +28,7 @@ export default function Calendar() {
 
   const handleSelect = (date: Date | undefined) => {
     if (date) {
-      const formattedDate = dayjs(date).format("YYYY-MM-DD");
+      const formattedDate = dayjs(date).tz("Asia/Seoul").format("YYYY-MM-DD");
       setSelectedDate(formattedDate);
       console.log("선택한 날짜:", formattedDate);
     }
@@ -40,7 +40,7 @@ export default function Calendar() {
       <DayPicker
         locale={ko}
         mode="single"
-        selected={dayjs(selectedDate).toDate()}
+        selected={dayjs(selectedDate).tz("Asia/Seoul").toDate()}
         onSelect={handleSelect}
         modifiers={modifiers}
         modifiersStyles={modifiersStyles}
