@@ -3,9 +3,14 @@ import { ko } from "react-day-picker/locale";
 import Css from "./style/calenderStyle";
 import dayjs from "dayjs";
 import { useCalendarStore } from "../store/useCalendarStore";
+import { useEffect } from "react";
 
 export default function Calendar() {
   const { selectedDate, setSelectedDate } = useCalendarStore();
+
+  useEffect(() => {
+    console.log(selectedDate);
+  }, [selectedDate]);
 
   const todayKST = new Date();
   todayKST.setHours(0, 0, 0, 0);
