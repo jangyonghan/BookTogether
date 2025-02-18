@@ -5,6 +5,20 @@ const nextConfig: NextConfig = {
     styledComponents: true, // Next.js의 styled-components 지원 활성화
   },
   reactStrictMode: true,
+  output: "standalone", // ✅ 빌드 결과물을 최신 상태로 유지
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "no-store, no-cache, must-revalidate, proxy-revalidate",
+          },
+        ],
+      },
+    ];
+  },
   webpack: (config) => {
     // 기존 Webpack 설정
     config.module.rules.push(
