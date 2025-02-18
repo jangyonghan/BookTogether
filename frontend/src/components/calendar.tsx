@@ -2,19 +2,20 @@ import { DayPicker } from "react-day-picker";
 import { ko } from "react-day-picker/locale";
 import Css from "./style/calenderStyle";
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
 import { useCalendarStore } from "../store/useCalendarStore";
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
 
 export default function Calendar() {
   const { selectedDate, setSelectedDate } = useCalendarStore();
 
-  const today = dayjs().tz("Asia/Seoul").toDate();
+  const today = new Date();
+  const todayKST = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
+
   const modifiers = {
-    toDay: today,
+    toDay: todayKST, // ✅ 오늘 날짜를 KST 기준으로 저장
   };
 
   const modifiersStyles = {
@@ -28,9 +29,8 @@ export default function Calendar() {
 
   const handleSelect = (date: Date | undefined) => {
     if (date) {
-      const formattedDate = dayjs(date).tz("Asia/Seoul").format("YYYY-MM-DD");
+      const formattedDate = dayjs(date).format("YYYY-MM-DD");
       setSelectedDate(formattedDate);
-      console.log("선택한 날짜:", formattedDate);
     }
   };
 
@@ -40,7 +40,7 @@ export default function Calendar() {
       <DayPicker
         locale={ko}
         mode="single"
-        selected={dayjs(selectedDate).tz("Asia/Seoul").toDate()}
+        selected={new Date(selectedDate)}
         onSelect={handleSelect}
         modifiers={modifiers}
         modifiersStyles={modifiersStyles}
