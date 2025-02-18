@@ -7,12 +7,8 @@ import { useCalendarStore } from "../store/useCalendarStore";
 export default function Calendar() {
   const { selectedDate, setSelectedDate } = useCalendarStore();
 
-  const today = new Date();
-  const todayKST = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate()
-  );
+  const todayKST = new Date();
+  todayKST.setHours(0, 0, 0, 0);
 
   const modifiers = {
     toDay: todayKST, // ✅ 오늘 날짜를 KST 기준으로 저장
