@@ -1,17 +1,67 @@
+import { DayPicker } from "react-day-picker";
+import { ko } from "react-day-picker/locale";
+import "react-day-picker/style.css";
 import dayjs from "dayjs";
-import { useBible } from "../hook/useBible";
+import { useCalendarStore } from "../store/useCalendarStore";
+import styled from "styled-components";
 
-export default function Test() {
-  const { data, isLoading, isError } = useBible();
+const StyledDayPicker = styled.div`
+  .rdp-root {
+    --rdp-accent-color: #transparent;
+  }
+`;
 
-  const CreatDate = dayjs(data?.createdAt).format("YYYY.MM.DD HH:mm:ss");
-  const Update = dayjs(data?.updateAt).format("YYYY.MM.DD HH:mm:ss");
-  if (!data) return <div>데이터가 없습니다.</div>;
+export default function Calendar() {
+  const { selectedDate, setSelectedDate } = useCalendarStore();
+
+  const today = new Date();
+  const modifiers = {
+    toDay: today,
+  };
+
+  const modifiersStyles = {
+    toDay: {
+      color: "white",
+      backgroundColor: "#E0518B",
+      borderRadius: "50%",
+      padding: "1px",
+    },
+    range_start: {
+      border: "none",
+      backgroundColor: "transparent",
+      color: "inherit",
+      borderRadius: "50%",
+    },
+    range_end: {
+      border: "none",
+      backgroundColor: "transparent",
+      color: "inherit",
+      borderRadius: "50%",
+    },
+    range_middle: {
+      backgroundColor: "#E0518B",
+      color: "white",
+    },
+  };
+
+  const handleSelect = (date: Date | undefined) => {
+    if (date) {
+      const formattedDate = dayjs(date).format("YYYY-MM-DD");
+      setSelectedDate(formattedDate);
+    }
+  };
+
   return (
     <>
-      <div>{data?.text}</div>
-      <div>{data?.verse}</div>
-      <div>{CreatDate}</div>
+      <StyledDayPicker>
+        <DayPicker
+          locale={ko}
+          mode="range"
+          modifiers={modifiers}
+          modifiersStyles={modifiersStyles}
+          showOutsideDays
+        />
+      </StyledDayPicker>
     </>
   );
 }

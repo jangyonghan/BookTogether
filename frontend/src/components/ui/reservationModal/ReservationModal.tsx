@@ -11,16 +11,17 @@ import {
   CancelButton,
   ReservationButton,
   FooterDiv,
-} from "./modal.style";
-import Calendar from "../calendar";
+} from "./ReservationModal.style";
+import Calendar from "../../calendar";
 import XButton from "@/src/asset/icons/X_button.svg";
-import BasicSelect from "./selector";
-import TimePickerValue from "./time";
+import BasicSelect from "../selector";
+import TimePickerValue from "../time";
 import dayjs, { Dayjs } from "dayjs";
 import { useReservationAdd } from "@/src/hook/useReservation";
 import { useRooms } from "@/src/hook/useRooms";
 import { useCalendarStore } from "@/src/store/useCalendarStore";
 import { AxiosError } from "axios";
+import { getEndDate, combineDateTime } from "@/src/utils/dateTimeUtils";
 
 const style = {
   position: "absolute",
@@ -43,7 +44,7 @@ interface BasicModalProps {
   onCompleteSuccess: () => void;
 }
 
-export default function BasicModal({
+export default function ReservationModal({
   open,
   onClose,
   onCompleteSuccess,
@@ -56,6 +57,7 @@ export default function BasicModal({
   const [startTime, setStartTime] = React.useState<Dayjs | null>(null);
   const [endTime, setEndTime] = React.useState<Dayjs | null>(null);
   const { selectedDate } = useCalendarStore();
+  const [endDate, setEndDate] = React.useState<Dayjs | null>(null);
 
   const roomList = Array.isArray(data) ? data : [];
   const rooms = roomList?.map((room) => ({
@@ -67,32 +69,36 @@ export default function BasicModal({
     onClose();
   };
 
+  const handleEndTimeChange = (time: Dayjs | null) => {
+    if (!startTime || !time) {
+      setEndTime(time);
+      return;
+    }
+
+    const updatedEndDate = getEndDate(selectedDate, startTime, time);
+    setEndDate(updatedEndDate);
+    setEndTime(time);
+  };
+
   const handleSubmit = () => {
     if (!room || !purpose || !userName || !startTime || !endTime) {
       alert("모든필드를 입력하세요");
       return;
     }
 
-    const selectedDateObj = dayjs(selectedDate, "YYYY-MM-DD");
+    const combinedStartTime = combineDateTime(dayjs(selectedDate), startTime);
+    const combinedEndTime = combineDateTime(endDate, endTime);
 
-    // ✅ 날짜 + 시간 결합
-    const combinedStartTime = selectedDateObj
-      .hour(startTime.hour())
-      .minute(startTime.minute())
-      .second(0)
-      .millisecond(0);
-
-    const combinedEndTime = selectedDateObj
-      .hour(endTime.hour())
-      .minute(endTime.minute())
-      .second(0)
-      .millisecond(0);
+    if (!combinedStartTime || !combinedEndTime) {
+      alert("날짜 및 시간 설정 오류");
+      return;
+    }
 
     const newEvent = {
       roomId: room,
       title: purpose,
-      startTime: combinedStartTime.toISOString(),
-      endTime: combinedEndTime.toISOString(),
+      startTime: combinedStartTime,
+      endTime: combinedEndTime,
       booker: userName,
     };
 
@@ -103,8 +109,6 @@ export default function BasicModal({
       },
       onError: (error) => {
         const axiosError = error as AxiosError;
-
-        console.log("예약 실패:", axiosError.response?.data || error);
 
         if (axiosError.response) {
           alert(
@@ -188,7 +192,7 @@ export default function BasicModal({
                 startTime={startTime}
                 setStartTime={setStartTime}
                 endTime={endTime}
-                setEndTime={setEndTime}
+                setEndTime={handleEndTimeChange}
               />
             </ModalSection>
 
