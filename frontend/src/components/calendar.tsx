@@ -22,6 +22,10 @@ export default function Calendar() {
     }
   }, []);
 
+  useEffect(() => {
+    console.log("selectedDate 변경됨:", selectedDate);
+  }, [selectedDate]);
+
   const today = new Date();
   const modifiers = {
     toDay: today,
