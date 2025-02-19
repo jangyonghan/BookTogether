@@ -4,7 +4,7 @@ import "react-day-picker/style.css";
 import dayjs from "dayjs";
 import { useCalendarStore } from "../store/useCalendarStore";
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const StyledDayPicker = styled.div`
   .rdp-root {
@@ -14,10 +14,6 @@ const StyledDayPicker = styled.div`
 
 export default function Calendar() {
   const { selectedDate, setSelectedDate } = useCalendarStore();
-
-  useEffect(() => {
-    console.log("렌더링된 selectedDate:", selectedDate);
-  }, [selectedDate]);
 
   const modifiersStyles = {
     selected: {
@@ -44,6 +40,7 @@ export default function Calendar() {
     <>
       <StyledDayPicker>
         <DayPicker
+          key={selectedDate}
           locale={ko}
           mode="single"
           selected={dayjs(selectedDate).toDate()}
