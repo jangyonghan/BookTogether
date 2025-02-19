@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import BasicModal from "./modal";
+import ReservationModal from "./reservationModal/ReservationModal";
 import { useSnackbarStore } from "@/src/store/useSnackbarStore";
 
 const Button = styled.button`
@@ -32,7 +32,7 @@ export default function ReservationButton() {
   return (
     <>
       <Button onClick={handelOpenModal}>예약하기</Button>
-      <BasicModal
+      <ReservationModal
         open={isModalOpen}
         onClose={handelCloseModal}
         onCompleteSuccess={() => openSnackbar("reservation")}

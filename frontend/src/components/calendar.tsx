@@ -1,18 +1,20 @@
 import { DayPicker } from "react-day-picker";
 import { ko } from "react-day-picker/locale";
-import Css from "./style/calenderStyle";
+import "react-day-picker/style.css";
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
 import { useCalendarStore } from "../store/useCalendarStore";
+import styled from "styled-components";
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
+const StyledDayPicker = styled.div`
+  .rdp-root {
+    --rdp-accent-color: #e0518b;
+  }
+`;
 
 export default function Calendar() {
   const { selectedDate, setSelectedDate } = useCalendarStore();
 
-  const today = dayjs().tz("Asia/Seoul").toDate();
+  const today = new Date();
   const modifiers = {
     toDay: today,
   };
@@ -28,24 +30,24 @@ export default function Calendar() {
 
   const handleSelect = (date: Date | undefined) => {
     if (date) {
-      const formattedDate = dayjs(date).tz("Asia/Seoul").format("YYYY-MM-DD");
+      const formattedDate = dayjs(date).format("YYYY-MM-DD");
       setSelectedDate(formattedDate);
-      console.log("선택한 날짜:", formattedDate);
     }
   };
 
   return (
     <>
-      <style>{Css}</style>
-      <DayPicker
-        locale={ko}
-        mode="single"
-        selected={dayjs(selectedDate).tz("Asia/Seoul").toDate()}
-        onSelect={handleSelect}
-        modifiers={modifiers}
-        modifiersStyles={modifiersStyles}
-        showOutsideDays
-      />
+      <StyledDayPicker>
+        <DayPicker
+          locale={ko}
+          mode="single"
+          selected={dayjs(selectedDate).toDate()}
+          onSelect={handleSelect}
+          modifiers={modifiers}
+          modifiersStyles={modifiersStyles}
+          showOutsideDays
+        />
+      </StyledDayPicker>
     </>
   );
 }
