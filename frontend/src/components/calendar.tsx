@@ -4,6 +4,7 @@ import "react-day-picker/style.css";
 import dayjs from "dayjs";
 import { useCalendarStore } from "../store/useCalendarStore";
 import styled from "styled-components";
+import { useEffect } from "react";
 
 const StyledDayPicker = styled.div`
   .rdp-root {
@@ -13,6 +14,13 @@ const StyledDayPicker = styled.div`
 
 export default function Calendar() {
   const { selectedDate, setSelectedDate } = useCalendarStore();
+
+  useEffect(() => {
+    const today = dayjs().format("YYYY-MM-DD");
+    if (selectedDate !== today) {
+      setSelectedDate(today);
+    }
+  }, []);
 
   const today = new Date();
   const modifiers = {
