@@ -3,7 +3,6 @@ import { ko } from "react-day-picker/locale";
 import "react-day-picker/style.css";
 import dayjs from "dayjs";
 import { useCalendarStore } from "../store/useCalendarStore";
-import { useEffect } from "react";
 import styled from "styled-components";
 
 const StyledDayPicker = styled.div`
@@ -15,15 +14,9 @@ const StyledDayPicker = styled.div`
 export default function Calendar() {
   const { selectedDate, setSelectedDate } = useCalendarStore();
 
-  useEffect(() => {
-    console.log(selectedDate);
-  }, [selectedDate]);
-
-  const todayKST = new Date();
-  todayKST.setHours(0, 0, 0, 0);
-
+  const today = new Date();
   const modifiers = {
-    toDay: todayKST,
+    toDay: today,
   };
 
   const modifiersStyles = {
@@ -48,7 +41,7 @@ export default function Calendar() {
         <DayPicker
           locale={ko}
           mode="single"
-          selected={new Date(selectedDate)}
+          selected={dayjs(selectedDate).toDate()}
           onSelect={handleSelect}
           modifiers={modifiers}
           modifiersStyles={modifiersStyles}
