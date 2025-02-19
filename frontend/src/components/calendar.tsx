@@ -1,9 +1,16 @@
 import { DayPicker } from "react-day-picker";
 import { ko } from "react-day-picker/locale";
-import Css from "./style/calenderStyle";
+import "react-day-picker/style.css";
 import dayjs from "dayjs";
 import { useCalendarStore } from "../store/useCalendarStore";
 import { useEffect } from "react";
+import styled from "styled-components";
+
+const StyledDayPicker = styled.div`
+  .rdp-root {
+    --rdp-accent-color: #e0518b;
+  }
+`;
 
 export default function Calendar() {
   const { selectedDate, setSelectedDate } = useCalendarStore();
@@ -16,7 +23,7 @@ export default function Calendar() {
   todayKST.setHours(0, 0, 0, 0);
 
   const modifiers = {
-    toDay: todayKST, // ✅ 오늘 날짜를 KST 기준으로 저장
+    toDay: todayKST,
   };
 
   const modifiersStyles = {
@@ -37,16 +44,17 @@ export default function Calendar() {
 
   return (
     <>
-      <style>{Css}</style>
-      <DayPicker
-        locale={ko}
-        mode="single"
-        selected={new Date(selectedDate)}
-        onSelect={handleSelect}
-        modifiers={modifiers}
-        modifiersStyles={modifiersStyles}
-        showOutsideDays
-      />
+      <StyledDayPicker>
+        <DayPicker
+          locale={ko}
+          mode="single"
+          selected={new Date(selectedDate)}
+          onSelect={handleSelect}
+          modifiers={modifiers}
+          modifiersStyles={modifiersStyles}
+          showOutsideDays
+        />
+      </StyledDayPicker>
     </>
   );
 }
