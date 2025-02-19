@@ -19,15 +19,6 @@ export default function Calendar() {
     toDay: today,
   };
 
-  const modifiersStyles = {
-    toDay: {
-      color: "white",
-      backgroundColor: "#E0518B",
-      borderRadius: "50%",
-      padding: "1px",
-    },
-  };
-
   const handleSelect = (date: Date | undefined) => {
     if (date) {
       const formattedDate = dayjs(date).format("YYYY-MM-DD");
@@ -44,7 +35,6 @@ export default function Calendar() {
           selected={dayjs(selectedDate).toDate()}
           onSelect={handleSelect}
           modifiers={modifiers}
-          modifiersStyles={modifiersStyles}
           showOutsideDays
         />
       </StyledDayPicker>

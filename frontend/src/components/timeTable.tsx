@@ -57,7 +57,6 @@ const MyCalendar = () => {
   }));
 
   const handelClickEvent = (clickInfo: EventClickArg) => {
-    console.log(clickInfo.event.id);
     setSelectedReservationId(clickInfo.event.id);
     setIsModalOpen(true);
   };
@@ -80,7 +79,7 @@ const MyCalendar = () => {
         initialDate={selectedDate} // 초기날짜
         events={formattedEvents}
         slotMinTime="00:00:00"
-        slotMaxTime="23:59:00"
+        slotMaxTime="24:00:00"
         height="auto"
         contentHeight="auto"
         eventClick={handelClickEvent}
