@@ -10,10 +10,24 @@ const StyledDayPicker = styled.div`
   .rdp-root {
     --rdp-accent-color: #e0518b;
   }
+  .rdp-day_selected {
+    background-color: #e0518b !important;
+    color: white !important;
+    border-radius: 50%;
+  }
 `;
 
 export default function Calendar() {
   const { selectedDate, setSelectedDate } = useCalendarStore();
+
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+    setSelectedDate(dayjs().format("YYYY-MM-DD")); // 초기값 설정
+  }, []);
+
+  if (!hydrated) return null; // Hydration 완료 전에는 렌더링하지 않음
 
   const modifiersStyles = {
     selected: {
