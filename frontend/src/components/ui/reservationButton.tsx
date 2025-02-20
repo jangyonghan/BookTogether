@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ReservationModal from "./reservationModal/ReservationModal";
-import { useSnackbarStore } from "@/src/store/useSnackbarStore";
+import Snackbar from "./snackBar";
 
 const Button = styled.button`
   display: inline-block;
@@ -19,7 +19,11 @@ const Button = styled.button`
 
 export default function ReservationButton() {
   const [isModalOpen, setModalOpen] = React.useState(false);
-  const { openSnackbar } = useSnackbarStore();
+  const [isSnackbar, setIsSnackbar] = useState(false);
+
+  const toggleSnackbar = () => {
+    setIsSnackbar((prev) => !prev);
+  };
 
   const handelOpenModal = () => {
     setModalOpen(true);
@@ -35,8 +39,15 @@ export default function ReservationButton() {
       <ReservationModal
         open={isModalOpen}
         onClose={handelCloseModal}
-        onCompleteSuccess={() => openSnackbar("reservation")}
+        onCompleteSuccess={() => toggleSnackbar()}
       />
+      {isSnackbar && (
+        <Snackbar
+          message="예약 완료"
+          isOpen={isSnackbar}
+          onClose={toggleSnackbar}
+        />
+      )}
     </>
   );
 }
