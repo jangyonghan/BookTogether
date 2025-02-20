@@ -7,8 +7,7 @@ import { useReservation } from "../hook/useReservation";
 import { useState } from "react";
 import DeleteModal from "./ui/deleteModal";
 import { EventClickArg } from "@fullcalendar/core";
-import SnackBar from "./ui/snackBar";
-import { useSnackbarStore } from "../store/useSnackbarStore";
+import Snackbar from "./ui/snackBar";
 
 const CalendarWrapper = styled.div`
   .fc-event {
@@ -34,13 +33,11 @@ const MyCalendar = () => {
   const [selectedReservationId, setSelectedReservationId] = useState<
     string | null
   >(null);
+  const [isSnackbar, setIsSnackbar] = useState(false);
 
-  const {
-    openSnackbar,
-    closeSnackbar,
-    deleteSnackbarOpen,
-    reservationSnackbarOpen,
-  } = useSnackbarStore();
+  const toggleSnackbar = () => {
+    setIsSnackbar((prev) => !prev);
+  };
 
   const reservationData = Array.isArray(data) ? data : [data];
 
@@ -90,25 +87,17 @@ const MyCalendar = () => {
           reservationId={selectedReservationId}
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          onDeleteSuccess={() => openSnackbar("delete")}
+          onDeleteSuccess={() => toggleSnackbar()}
         />
       )}
 
-      <SnackBar
-        message="삭제완료"
-        open={deleteSnackbarOpen}
-        onClose={() => closeSnackbar("delete")}
-        backgroundColor="#fbeded"
-        color="#d14343"
-      />
-
-      <SnackBar
-        message="예약완료"
-        open={reservationSnackbarOpen}
-        onClose={() => closeSnackbar("reservation")}
-        backgroundColor="#eef9f6"
-        color="#4cbfa4"
-      />
+      {isSnackbar && (
+        <Snackbar
+          message="삭제 완료"
+          isOpen={isSnackbar}
+          onClose={toggleSnackbar}
+        />
+      )}
     </CalendarWrapper>
   );
 };

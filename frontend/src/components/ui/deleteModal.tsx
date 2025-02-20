@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useReservationDelete } from "@/src/hook/useReservation";
 import styled from "styled-components";
-import SnackBar from "./snackBar";
 
 const style = {
   position: "fixed",
