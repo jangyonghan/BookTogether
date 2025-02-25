@@ -25,6 +25,15 @@ const CalendarWrapper = styled.div`
   }
 `;
 
+const TimeTableH2 = styled.h2`
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 const MyCalendar = () => {
   const { selectedDate } = useCalendarStore();
   const { selectedRoom } = useRoomStore();
@@ -60,6 +69,7 @@ const MyCalendar = () => {
 
   return (
     <CalendarWrapper>
+      <TimeTableH2>타임테이블</TimeTableH2>
       <FullCalendar
         key={selectedDate}
         locale={"ko"}
@@ -81,7 +91,6 @@ const MyCalendar = () => {
         contentHeight="auto"
         eventClick={handelClickEvent}
       />
-
       {isModalOpen && (
         <DeleteModal
           reservationId={selectedReservationId}
@@ -90,7 +99,6 @@ const MyCalendar = () => {
           onDeleteSuccess={() => toggleSnackbar()}
         />
       )}
-
       {isSnackbar && (
         <Snackbar
           message="삭제 완료"
