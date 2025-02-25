@@ -15,6 +15,9 @@ const StyledDayPicker = styled.div`
     color: white !important;
     border-radius: 50%;
   }
+  .rdp-caption_label {
+    font-size: 24px;
+  }
 `;
 
 export default function Calendar() {
