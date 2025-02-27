@@ -16,6 +16,8 @@ calendar와 timeTable이 제공되며 회의실별 예약현황을 확인할 수
 
 # 기술 스택
 
+<p>
+
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white"/>
 <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white"/>
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black"/>
@@ -31,15 +33,6 @@ calendar와 timeTable이 제공되며 회의실별 예약현황을 확인할 수
 </p>
 
 # 구현
-
-<div style="display: flex; justify-content: center; gap: 10px;">
-
-![image](https://github.com/user-attachments/assets/e9fb4d6d-b286-4d4d-a1d1-e17142e329eb)
-
-<div style="width : 320px">
-
-![image](https://github.com/user-attachments/assets/76c6ac5a-548d-4810-94ff-cc440cdfc205)
-
-</div>
-
-</div>
+| bible/calendar | reservation | timeTable |
+|---------|---------|---------|
+|![image](https://github.com/user-attachments/assets/e9fb4d6d-b286-4d4d-a1d1-e17142e329eb)| ![image](https://github.com/user-attachments/assets/bcc4bebd-e1f3-454e-ad9a-b6e193deb51f) |  ![image](https://github.com/user-attachments/assets/76c6ac5a-548d-4810-94ff-cc440cdfc205) 
