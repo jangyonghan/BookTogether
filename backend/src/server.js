@@ -4,7 +4,10 @@ import app from "./app.js";
 
 dotenv.config();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
+
+console.log(`🛠️ DEBUG: process.env.PORT = ${process.env.PORT}`); // 디버깅 로그 추가
+console.log(`🛠️ DEBUG: Server will start on port ${PORT}`);
 
 // ✅ MongoDB 연결
 mongoose
