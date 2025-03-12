@@ -66,7 +66,7 @@ const MyCalendar = () => {
       title: `${event.booker} - ${event.title}`,
       start: event.startTime,
       end: event.endTime,
-      extendedProps: { showTime: durationInMinutes > 30 },
+      extendedProps: { showTime: durationInMinutes > 59 },
     };
   });
 
@@ -137,6 +137,3 @@ const MyCalendar = () => {
 };
 
 export default MyCalendar;
-
-// 이제 dayjs를 통해서 차이가 몇분 나는지 가져온 다음에 displayEventTime에 적용하면 됨
-//
