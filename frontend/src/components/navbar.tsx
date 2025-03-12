@@ -6,6 +6,10 @@ const NavbarHeader = styled.header`
   justify-content: flex-end;
   align-items: center;
   width: 100%;
+  margin-bottom: 10px;
+  @media (min-width: 768px) {
+    margin-bottom: 10px;
+  }
 `;
 
 export default function Navbar() {

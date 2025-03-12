@@ -60,7 +60,25 @@ export default function ReservationModal({
   const [endDate, setEndDate] = React.useState<Dayjs | null>(null);
 
   const roomList = Array.isArray(data) ? data : [];
-  const rooms = roomList?.map((room) => ({
+
+  const sortedRoomList = [...roomList].sort((a, b) => {
+    const isAConference = a.name.startsWith("회의실");
+    const isBConference = b.name.startsWith("회의실");
+
+    if (isAConference && isBConference) {
+      return (
+        parseInt(a.name.replace("회의실", ""), 10) -
+        parseInt(b.name.replace("회의실", ""), 10)
+      );
+    }
+
+    if (isAConference) return -1;
+    if (isBConference) return 1;
+
+    return a.name.localeCompare(b.name, "ko");
+  });
+
+  const rooms = sortedRoomList?.map((room) => ({
     value: room._id,
     label: room.name,
   }));

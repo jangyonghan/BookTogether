@@ -6,9 +6,9 @@ import { useRoomStore } from "../store/useRoomStore";
 import { useReservation } from "../hook/useReservation";
 import { useState } from "react";
 import DeleteModal from "./ui/deleteModal";
-import { EventClickArg } from "@fullcalendar/core";
-import SnackBar from "./ui/snackBar";
-import { useSnackbarStore } from "../store/useSnackbarStore";
+import { EventClickArg, EventContentArg } from "@fullcalendar/core";
+import Snackbar from "./ui/snackBar";
+import dayjs from "dayjs";
 
 const CalendarWrapper = styled.div`
   .fc-event {
@@ -26,6 +26,15 @@ const CalendarWrapper = styled.div`
   }
 `;
 
+const TimeTableH2 = styled.h2`
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 const MyCalendar = () => {
   const { selectedDate } = useCalendarStore();
   const { selectedRoom } = useRoomStore();
@@ -34,13 +43,11 @@ const MyCalendar = () => {
   const [selectedReservationId, setSelectedReservationId] = useState<
     string | null
   >(null);
+  const [isSnackbar, setIsSnackbar] = useState(false);
 
-  const {
-    openSnackbar,
-    closeSnackbar,
-    deleteSnackbarOpen,
-    reservationSnackbarOpen,
-  } = useSnackbarStore();
+  const toggleSnackbar = () => {
+    setIsSnackbar((prev) => !prev);
+  };
 
   const reservationData = Array.isArray(data) ? data : [data];
 
@@ -49,21 +56,45 @@ const MyCalendar = () => {
     (event) => event?.roomId === selectedRoom
   );
 
-  const formattedEvents = filteredEvents.map((event) => ({
-    id: event._id,
-    title: `${event.booker} - ${event.title}`,
-    start: event.startTime,
-    end: event.endTime,
-  }));
+  const formattedEvents = filteredEvents.map((event) => {
+    const start = dayjs(event.startTime);
+    const end = dayjs(event.endTime);
+    const durationInMinutes = end.diff(start, "minute");
+
+    return {
+      id: event._id,
+      title: `${event.booker} - ${event.title}`,
+      start: event.startTime,
+      end: event.endTime,
+      extendedProps: { showTime: durationInMinutes > 30 },
+    };
+  });
+
+  const renderEventContent = (eventInfo: EventContentArg) => {
+    const showTime = eventInfo.event.extendedProps.showTime;
+    return (
+      <div>
+        {!showTime ? (
+          <span>{eventInfo.event.title}</span>
+        ) : (
+          <span>
+            {dayjs(eventInfo.event.start).format("HH:mm")} -{" "}
+            {dayjs(eventInfo.event.end).format("HH:mm")} <br />
+            {eventInfo.event.title}
+          </span>
+        )}
+      </div>
+    );
+  };
 
   const handelClickEvent = (clickInfo: EventClickArg) => {
-    console.log(clickInfo.event.id);
     setSelectedReservationId(clickInfo.event.id);
     setIsModalOpen(true);
   };
 
   return (
     <CalendarWrapper>
+      <TimeTableH2>타임테이블</TimeTableH2>
       <FullCalendar
         key={selectedDate}
         locale={"ko"}
@@ -79,39 +110,33 @@ const MyCalendar = () => {
         }}
         initialDate={selectedDate} // 초기날짜
         events={formattedEvents}
-        slotMinTime="00:00:00"
-        slotMaxTime="23:59:00"
+        slotMinTime="08:00:00"
+        slotMaxTime="28:00:00"
         height="auto"
         contentHeight="auto"
         eventClick={handelClickEvent}
+        eventContent={renderEventContent}
       />
-
       {isModalOpen && (
         <DeleteModal
           reservationId={selectedReservationId}
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          onDeleteSuccess={() => openSnackbar("delete")}
+          onDeleteSuccess={() => toggleSnackbar()}
         />
       )}
-
-      <SnackBar
-        message="삭제완료"
-        open={deleteSnackbarOpen}
-        onClose={() => closeSnackbar("delete")}
-        backgroundColor="#fbeded"
-        color="#d14343"
-      />
-
-      <SnackBar
-        message="예약완료"
-        open={reservationSnackbarOpen}
-        onClose={() => closeSnackbar("reservation")}
-        backgroundColor="#eef9f6"
-        color="#4cbfa4"
-      />
+      {isSnackbar && (
+        <Snackbar
+          message="삭제 완료"
+          isOpen={isSnackbar}
+          onClose={toggleSnackbar}
+        />
+      )}
     </CalendarWrapper>
   );
 };
 
 export default MyCalendar;
+
+// 이제 dayjs를 통해서 차이가 몇분 나는지 가져온 다음에 displayEventTime에 적용하면 됨
+//

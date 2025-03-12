@@ -40,6 +40,13 @@ const RoomName = styled.span`
   color: white;
 `;
 
+const RoomH2 = styled.h2`
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 24px;
+  display: block;
+`;
+
 const roomIcons: Record<string, React.ElementType> = {
   회의실1: Home,
   회의실2: Flower,
@@ -60,10 +67,29 @@ export default function ReservationStatus() {
 
   const roomList = Array.isArray(data) ? data : [];
 
+  // 정렬 순서 회의실1~4부터 나오도록!!
+  const sortedRoomList = [...roomList].sort((a, b) => {
+    const isAConference = a.name.startsWith("회의실");
+    const isBConference = b.name.startsWith("회의실");
+
+    if (isAConference && isBConference) {
+      return (
+        parseInt(a.name.replace("회의실", ""), 10) -
+        parseInt(b.name.replace("회의실", ""), 10)
+      );
+    }
+
+    if (isAConference) return -1;
+    if (isBConference) return 1;
+
+    return a.name.localeCompare(b.name, "ko");
+  });
+
   return (
     <>
+      <RoomH2>예약 현황</RoomH2>
       <RoomWrapper>
-        {roomList?.map((room) => {
+        {sortedRoomList?.map((room) => {
           const IconComponent = roomIcons[room.name] || Home;
           return (
             <RoomDiv
