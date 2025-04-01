@@ -9,6 +9,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// ✅ "/health" 엔드포인트 추가
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "OK", message: "Server is running!" });
+});
+
 // 라우터 연결
 app.use("/", RoomRouter); // '/Room' 라우트 연결
 app.use("/", ReservationRouter); // '/Reservation' 라우트 연결
