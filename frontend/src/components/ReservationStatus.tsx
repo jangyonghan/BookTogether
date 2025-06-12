@@ -51,10 +51,7 @@ const roomIcons: Record<string, React.ElementType> = {
   회의실1: Home,
   회의실2: Flower,
   회의실3: Diamond,
-  회의실4: Global,
-  청년부실: Business,
-  대학부실: School,
-  중앙로비: Game,
+  연습실: Business,
 };
 
 export default function ReservationStatus() {
